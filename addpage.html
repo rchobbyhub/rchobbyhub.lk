@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Upload & Edit</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        .form-container { margin-bottom: 20px; }
+        select, input, button { display: block; margin: 10px auto; padding: 10px; width: 80%; max-width: 400px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; max-width: 800px; margin: auto; }
+        .product { border: 1px solid #ddd; padding: 10px; text-align: center; background-color: #f9f9f9; position: relative; }
+        img { max-width: 100%; height: auto; }
+        .btn-container { display: flex; justify-content: space-between; margin-top: 5px; }
+        .remove-btn, .edit-btn { padding: 5px; border: none; cursor: pointer; }
+        .remove-btn { background-color: red; color: white; }
+        .edit-btn { background-color: blue; color: white; }
+    </style>
+</head>
+<body>
+
+    <h2>Upload Product</h2>
+    <div class="form-container">
+        <select id="pageSelect">
+            <option value="drone">Drone</option>
+            <option value="helicopter">Helicopter</option>
+            <option value="car">Car</option>
+            <option value="flight">Flight</option>
+            <option value="jet">Jet</option>
+            <option value="jeep">Jeep</option>
+            <option value="boat">Boat</option>
+        </select>
+        <input type="text" id="productName" placeholder="Product Name">
+        <input type="number" id="productPrice" placeholder="Product Price">
+        <input type="file" id="productImage">
+        <button onclick="addProduct()">Save Product</button>
+        <button onclick="updateProduct()" id="updateBtn" style="display:none;">Update Product</button>
+    </div>
+
+    <h2>Products</h2>
+    <div class="product-grid" id="productGrid"></div>
+    <script>
+        function goToPage() {
+        var selectedPage = document.getElementById("drone").value;
+        window.location.href = selectedPage + "drone.html"; // This will navigate to the selected page
+        }
+    </script>
+
+    <script>
+        let selectedPage = document.getElementById("pageSelect").value;
+        let products = JSON.parse(localStorage.getItem(`products_${selectedPage}`)) || [];
+        let editIndex = null;
+
+        document.getElementById("pageSelect").addEventListener("change", function() {
+            selectedPage = this.value;
+            products = JSON.parse(localStorage.getItem(`products_${selectedPage}`)) || [];
+            showProducts();
+        });
+        
+        function addProduct() {
+            const name = document.getElementById("productName").value;
+            const price = document.getElementById("productPrice").value;
+            const imageFile = document.getElementById("productImage").files[0];
+
+            if (!name || !price || !imageFile) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                products.push({ name, price, image: event.target.result });
+                localStorage.setItem(`products_${selectedPage}`, JSON.stringify(products));
+                resetForm();
+                showProducts();
+            };
+            reader.readAsDataURL(imageFile);
+        }
+
+        function removeProduct(index) {
+            products.splice(index, 1);
+            localStorage.setItem(`products_${selectedPage}`, JSON.stringify(products));
+            showProducts();
+        }
+
+        function editProduct(index) {
+            document.getElementById("productName").value = products[index].name;
+            document.getElementById("productPrice").value = products[index].price;
+            editIndex = index;
+
+            document.querySelector("button[onclick='addProduct()']").style.display = "none";
+            document.getElementById("updateBtn").style.display = "block";
+        }
+
+        function updateProduct() {
+            const name = document.getElementById("productName").value;
+            const price = document.getElementById("productPrice").value;
+            const imageFile = document.getElementById("productImage").files[0];
+
+            if (!name || !price) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    products[editIndex] = { name, price, image: event.target.result };
+                    saveAndShow();
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                products[editIndex].name = name;
+                products[editIndex].price = price;
+                saveAndShow();
+            }
+        }
+
+        function saveAndShow() {
+            localStorage.setItem(`products_${selectedPage}`, JSON.stringify(products));
+            resetForm();
+            showProducts();
+        }
+
+        function resetForm() {
+            document.getElementById("productName").value = "";
+            document.getElementById("productPrice").value = "";
+            document.getElementById("productImage").value = "";
+            editIndex = null;
+
+            document.querySelector("button[onclick='addProduct()']").style.display = "block";
+            document.getElementById("updateBtn").style.display = "none";
+        }
+
+        function showProducts() {
+            const productGrid = document.getElementById("productGrid");
+            productGrid.innerHTML = "";
+
+            products.forEach((product, index) => {
+                let productDiv = document.createElement("div");
+                productDiv.classList.add("product");
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <p><strong>${product.name}</strong></p>
+                    <p>Price: Rs.${product.price}</p>
+                    <div class="btn-container">
+                        <button class="edit-btn" onclick="editProduct(${index})">Edit</button>
+                        <button class="remove-btn" onclick="removeProduct(${index})">X</button>
+                    </div>
+                `;
+                productGrid.appendChild(productDiv);
+            });
+        }
+
+        showProducts();
+    </script>
+
+</body>
+</html>
