@@ -6,81 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RC Hobby Hub</title>
     <style>
-        /* nevibar */
-
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-
-        /* Navbar Styling */
-        header {
-            background-color: #f9f6f6;
-            color: rgb(20, 5, 5);
-        }
-
-        .navbar {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            height: 60px;
-            /* Adjust as needed */
-            background-color: #ffffff;
-            /* Dark background for better contrast */
-            padding: 5px 20px;
-            /* Reduce padding */
-        }
-
-        .navbar li {
-            display: inline;
-            margin: 0 20px;
-        }
-
-        .navbar a {
-            color: rgb(12, 9, 9);
-            text-decoration: none;
-            font-size: 18px;
-            padding: 30px 40px;
-        }
-
-        .navbar a:hover {
-            background-color: lightgray;
-            color: black;
-        }
-
-
-        /* Section Styling */
-        section {
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        section h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        section p {
-            font-size: 1.2em;
-        }
-
-        .navbar img {
-            height: 70px;
-            width: auto;
-        }
-
-        /* nevi_end */
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background: url('https://img.freepik.com/premium-photo/drone-racing-competition-abandoned-warehouse-where-pilots-control-drones-through-vr-headsets_34950-14688.jpg') no-repeat center center/cover;
             color: white;
             text-align: center;
+        }
+
+        header {
+            background-color: white;
+            padding: 10px 20px;
+        }
+
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .navbar img.logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .navbar li a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 15px;
+        }
+
+        .navbar li a:hover {
+            background-color: lightgray;
+            color: black;
+            border-radius: 5px;
         }
 
         .container {
@@ -88,163 +56,145 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-
-        }
-
-        .logo {
-            max-height: 100px;
-            /* Adjust size */
-            width: auto;
-            border-radius: 5px;
-            /* Optional for rounded edges */
-            /* Maintain aspect ratio */
+            min-height: 80vh;
+            padding: 20px;
         }
 
         .menu {
-            background: (234, 224, 224, 0.7);
-            padding: 100px;
-            border-radius: 150px;
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 30px;
-        }
-
-        .menu {
-            background: (234, 224, 224, 0.7);
-            padding: 100px;
-            border-radius: 150px;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
         }
 
         .menu a {
             text-decoration: none;
             color: white;
-            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .menu img {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 30px;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
         }
 
         .social-icons {
             margin-top: 30px;
-        }
-
-        .social-icons a {
-            margin: 0 10px;
-            color: white;
-            font-size: 5px;
-        }
-
-        .navbar {
             display: flex;
-            justify-content: flex-start;
-            /* Aligns items to the left */
-            padding-left: 10px;
-            /* Adjust as needed */
+            justify-content: center;
+            gap: 20px;
         }
 
-        .navbar {
-            display: flex;
-            align-items: center;
-            /* Align items vertically */
-            padding: 5px 20px;
+        .social-icons img {
+            width: 30px;
+            height: 30px;
         }
 
-
-        .logo {
-            height: 50px;
-            /* Adjust to fit the navbar */
-            width: auto;
-            margin-right: 15px;
-            /* Add space between logo and menu */
+        section {
+            padding: 40px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            border-radius: 10px;
         }
 
+        section h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
 
-        /*________________________________________*/
+        section p,
+        section p1 {
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .menu {
+                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                padding: 0;
+            }
+
+            .menu img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .navbar img.logo {
+                margin: 0 auto 10px;
+            }
+        }
     </style>
+</head>
+
+<body>
     <header>
         <nav>
             <ul class="navbar">
-                <img src="image\logo.png" alt="RC Hobby Hub Logo" class="logo">
+                <img src="image/logo.png" alt="RC Hobby Hub Logo" class="logo">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#menu">Trening</a></li>
+                <li><a href="#menu">Training</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="https://maps.app.goo.gl/2gxkoXKxMLV9KM5SA">Location</a></li>
                 <li><a href="#about">About</a></li>
             </ul>
         </nav>
     </header>
-</head>
 
-<body>
     <div class="container">
-        <div class="menu">
+        <div class="menu" id="menu">
             <a href="drone.html"><img src="https://img.icons8.com/?size=100&id=qpD4mH5TknyM&format=png&color=FFFFFF"
-                    alt="Drone">Drone</a>
+                    alt="Drone"></a>
             <a href="helicopter.html"><img
-                    src="https://img.icons8.com/?size=100&id=WRkHSBKL4yOv&format=png&color=FFFFFF"
-                    alt="helicopter">Helicopter</a>
+                    src="https://img.icons8.com/?size=100&id=WRkHSBKL4yOv&format=png&color=FFFFFF" alt="Helicopter"></a>
             <a href="car.html"><img src="https://img.icons8.com/?size=100&id=66189&format=png&color=FFFFFF"
-                    alt="Car">Car</a>
+                    alt="Car"></a>
             <a href="flight.html"><img src="https://img.icons8.com/?size=100&id=89305&format=png&color=FFFFFF"
-                    alt="flight">Flight</a>
+                    alt="Flight"></a>
             <a href="jet.html"><img src="https://img.icons8.com/?size=100&id=6m0rOeRO0GLr&format=png&color=FFFFFF"
-                    alt="Jet">Jet</a>
+                    alt="Jet"></a>
             <a href="jeep.html"><img src="https://img.icons8.com/?size=100&id=IlRzF4cATxxw&format=png&color=FFFFFF"
-                    alt="Jeep">Jeep</a>
+                    alt="Jeep"></a>
             <a href="boat.html"><img src="https://img.icons8.com/?size=100&id=1321&format=png&color=FFFFFF"
-                    alt="Boat">Boat</a>
-
+                    alt="Boat"></a>
         </div>
+
         <div class="social-icons">
             <a href="https://web.facebook.com/profile.php?id=100065293590299"><img
-                    src="https://img.icons8.com/?size=100&id=118467&format=png&color=FFFFFF" alt="facebook"></a>
-            <!-- Facebook -->
+                    src="https://img.icons8.com/?size=100&id=118467&format=png&color=FFFFFF" alt="Facebook"></a>
             <a href="https://www.tiktok.com/@rchobbyhub?lang=en"><img
-                    src="https://img.icons8.com/?size=100&id=118638&format=png&color=FFFFFF" alt="tik tok"></a>
-            <a href="#"><img src="https://img.icons8.com/?size=100&id=62852&format=png&color=FFFFFF" alt="you tube"></a>
-            <!-- TikTok -->
+                    src="https://img.icons8.com/?size=100&id=118638&format=png&color=FFFFFF" alt="TikTok"></a>
+            <a href="#"><img src="https://img.icons8.com/?size=100&id=62852&format=png&color=FFFFFF" alt="YouTube"></a>
         </div>
-
-
     </div>
-    <section id="home">
-        <h1></h1>
-        <h1>.......................................................................................................................
-        </h1>
 
-    </section>
     <section id="home">
         <h1>Welcome to our Home Page</h1>
-        <p>The best place to buy high quality RC</p>
+        <p>The best place to buy high quality RC products</p>
     </section>
 
     <section id="contact">
         <h1>Contact Us</h1>
-        <p>content</p>
-        <p1>Number:0770762610 or 0717888721</p1>
+        <p>Number: 0770762610 or 0717888721</p>
     </section>
 
     <section id="location">
         <h1>Our Location</h1>
         <p>RC Hobby Hub</p>
-        <p1>744/B, Galle Road, Mada Pothupitiya, Wadduwa</p1>
+        <p>744/B, Galle Road, Mada Pothupitiya, Wadduwa</p>
     </section>
 
     <section id="about">
         <h1>About Us</h1>
-        <p>We Selling RC Drone, Helicopters 🚁, Cars 🚘, Boat 🚤 and Plane ✈️ .
-            We doing all above product repairs and spares supply.
-            Contact we any you hobby requirements 0770762610 or 0717888721..</p>
+        <p>We sell RC Drones, Helicopters 🚁, Cars 🚘, Boats 🚤, and Planes ✈️. We also provide repair services and
+            spare parts. Contact us for any of your RC hobby needs at 0770762610 or 0717888721.</p>
     </section>
 </body>
 
